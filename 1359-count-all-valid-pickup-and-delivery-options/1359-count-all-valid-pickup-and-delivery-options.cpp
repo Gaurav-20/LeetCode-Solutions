@@ -1,25 +1,18 @@
 const int MOD = 1e9 + 7;
 
-long dp[501][501] = {{0}};
+#define mul(a, b) ((a % MOD) * (b % MOD)) % MOD
+long long dp[501] = { -1 };
 
 class Solution {
 public:
-    long solve(int n, int m) {  
-        if (n > m || m < 0 || n < 0) {
-            return 0;
-        } else if (n == 0 && m == 0) {
-            return 1;
-        } else if (dp[n][m] != -1) {
-            return dp[n][m];
-        }
-        long ans = n * solve(n - 1, m);
-        ans = ans % MOD;
-        ans += ((m - n) % MOD * (solve(n, m - 1)) % MOD) % MOD;
-        return dp[n][m] = ans % MOD;
-    }
-    
     int countOrders(int n) {
-        memset(dp, -1, sizeof(dp));
-        return solve(n, n);
+        if (dp[0] == -1) {
+            dp[0] = 0;
+            dp[1] = 1;
+            for (int i = 2; i <= 500; i++) {
+                dp[i] = mul(i * (2 * i - 1), dp[i - 1]);
+            }
+        }
+        return dp[n];
     }
 };
