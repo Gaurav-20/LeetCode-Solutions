@@ -1,5 +1,5 @@
 # Reverse a linked list
-## Easy 
+##  Easy 
 <div class="problem-statement">
                 <p></p><p><span style="font-size:18px">Given a linked list of <strong>N </strong>nodes. The task is to reverse this list.</span></p>
 
