@@ -38,16 +38,10 @@ class Solution {
         if (head == nullptr || head->next == nullptr) {
             return head;
         }
-        Node* _curr = head;
-        Node* _prev = nullptr;
-        Node* _next = nullptr;
-        while (_curr != nullptr) {
-            _next = _curr->next;
-            _curr->next = _prev;
-            _prev = _curr;
-            _curr = _next;
-        }
-        return _prev;
+        Node* node = reverseList(head->next);
+        head->next->next = head;
+        head->next = nullptr;
+        return node;
     }
     
 };
