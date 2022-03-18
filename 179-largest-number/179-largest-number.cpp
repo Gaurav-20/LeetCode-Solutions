@@ -12,11 +12,9 @@ public:
         for (int& n : nums) {
             res += to_string(n);
         }
-        reverse(res.begin(), res.end());
-        while (res.size() > 1 && res.back() == '0') {
-            res.pop_back();
+        if (res[0] == '0') {
+            res = "0";
         }
-        reverse(res.begin(), res.end());
         return res;
     }
 };
