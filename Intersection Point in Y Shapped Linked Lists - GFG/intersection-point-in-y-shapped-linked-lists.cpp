@@ -80,30 +80,45 @@ struct Node {
   }
 }; */
 
-#define OFFSET 10000
+Node* temp;
+Node* a;
+Node* b;
 
 //Function to find intersection point in Y shaped Linked Lists.
 int intersectPoint(Node* head1, Node* head2) {
     // Your Code Here
-    Node* temp = head1;
-    while (temp != nullptr) {
-        temp->data -= OFFSET;
+    if (head1 == nullptr || head2 == nullptr) {
+        return -1;
+    }
+    int c1 = 0, c2 = 0;
+    temp = head1;
+    while (temp) {
+        c1++;
         temp = temp->next;
     }
     temp = head2;
-    int res = -1;
-    while (temp != nullptr) {
-        if (temp->data < -1000) {
-            res = temp->data + OFFSET;
-            break;
+    while (temp) {
+        c2++;
+        temp = temp->next;
+    }
+    a = head1;
+    b = head2;
+    if (c1 > c2) {
+        for (int i = 0; i < c1 - c2; i++) {
+            a = a->next;
         }
-        temp = temp->next;
+    } else if (c2 > c1) {
+        for (int i = 0; i < c2 - c1; i++) {
+            b = b->next;
+        }
     }
-    temp = head1;
-    while (temp != nullptr) {
-        temp->data += OFFSET;
-        temp = temp->next;
+    while (a && b) {
+        if (a == b) {
+            return a->data;
+        }
+        a = a->next;
+        b = b->next;
     }
-    return res;
+    return -1;
 }
 
