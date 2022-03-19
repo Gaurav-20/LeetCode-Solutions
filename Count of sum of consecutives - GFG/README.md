@@ -1,5 +1,5 @@
 # Count of sum of consecutives
-## Medium 
+##  Medium 
 <div class="problem-statement">
                 <p></p><p><span style="font-size:18px">Given a number <strong>N</strong>, the task is find the number of ways to represent this number as a sum of 2 or more consecutive natural numbers.</span></p>
 
