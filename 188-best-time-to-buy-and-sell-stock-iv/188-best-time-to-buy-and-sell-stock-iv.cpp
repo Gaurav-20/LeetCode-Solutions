@@ -21,6 +21,7 @@ class Solution {
 public:
     int maxProfit(int k, vector<int>& prices) {
         memset(dp, -1, sizeof(dp));
-        return solve(prices, 0, prices.size(), k, true);
+        bool buy = true; // Since we need to buy first
+        return solve(prices, 0, prices.size(), k, buy);
     }
 };
