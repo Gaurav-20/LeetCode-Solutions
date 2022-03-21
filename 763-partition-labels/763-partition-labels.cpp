@@ -7,11 +7,11 @@ public:
         int start = intervals[0][0], end = intervals[0][1];
 
         for (int i = 1; i < intervals.size(); i++) {
-            if(intervals[i][0] <= end && intervals[i][1] <= end)
+            if (intervals[i][0] <= end && intervals[i][1] <= end) {
                 continue;
-            else if (intervals[i][0] <= end) 
+            } else if (intervals[i][0] <= end) {
                 end = intervals[i][1];
-            else {
+            } else {
                 res.push_back({ start, end });
                 start = intervals[i][0];
                 end = intervals[i][1];
