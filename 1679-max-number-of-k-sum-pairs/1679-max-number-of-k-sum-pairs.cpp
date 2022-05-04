@@ -2,18 +2,13 @@ class Solution {
 public:
     int maxOperations(vector<int>& nums, int k) {
         int operations = 0;
-        sort(nums.begin(), nums.end());
-        int i = 0, j = nums.size() - 1;
-        while (i < j) {
-            int sum = nums[i] + nums[j];
-            if (sum == k) {
+        unordered_map<int, int> hash;
+        for (int& n : nums) {
+            if (hash[k - n] > 0) {
                 operations++;
-                i++;
-                j--;
-            } else if (sum > k) {
-                j--;
+                hash[k - n]--;
             } else {
-                i++;
+                hash[n]++;
             }
         }
         return operations;
