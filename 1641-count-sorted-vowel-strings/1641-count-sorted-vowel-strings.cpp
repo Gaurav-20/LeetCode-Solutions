@@ -1,6 +1,12 @@
 class Solution {
 public:
     int countVowelStrings(int n) {
-        return (n + 1) * (n + 2) * (n + 3) * (n + 4) / 24;
+        vector<int> dp = { 0, 1, 1, 1, 1, 1 };
+        for (int i = 1; i <= n; i++) {
+            for (int k = 1; k <= 5; k++) {
+                dp[k] += dp[k - 1];
+            }
+        }
+        return dp.back();
     }
 };
