@@ -21,14 +21,13 @@ public:
         }
         int numZeroes = getNumberOfZeroes(strs[it]);
         int numOnes = strs[it].size() - numZeroes;
-        dp[it][m][n] = solve(strs, it + 1, len, m, n);
-        if (m >= numZeroes && n >= numOnes) {
-            dp[it][m][n] = max(
-                dp[it][m][n], 
-                1 + solve(strs, it + 1, len, m - numZeroes, n - numOnes)
-            );
+        if (m < numZeroes || n < numOnes) {
+            return dp[it][m][n] = solve(strs, it + 1, len, m, n);
         }
-        return dp[it][m][n];
+        return dp[it][m][n] = max(
+                                solve(strs, it + 1, len, m, n),
+                                1 + solve(strs, it + 1, len, m - numZeroes, n - numOnes)
+                                );
     }
     
     int findMaxForm(vector<string>& strs, int m, int n) {
