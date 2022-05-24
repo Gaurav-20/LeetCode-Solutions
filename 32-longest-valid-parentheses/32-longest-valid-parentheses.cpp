@@ -5,23 +5,35 @@ public:
         if (n <= 1) {
             return 0;
         }
-        int curMax = 0;
-        vector<int> longest(n, 0);
-        for (int i = 1; i < n; i++) {
-            if (s[i] == ')') {
-                if (s[i - 1] == '(') {
-                    longest[i] = (i - 2) >= 0 ? (longest[i - 2] + 2) : 2;
-                    curMax = max(longest[i], curMax);
-                } else {
-                    int prevIndex = i - longest[i - 1] - 1;
-                    if (prevIndex >= 0 && s[prevIndex] == '(') {
-                        longest[i] = longest[i - 1] + 2 + 
-                            ((prevIndex - 1 >= 0) ? longest[prevIndex - 1] : 0);
-                        curMax = max(longest[i], curMax);
+        int longest = 0;
+        stack<int> st;
+        for (int i = 0; i < n; i++) {
+            if (s[i] == '(') {
+                st.push(i);
+            } else {
+                if (!st.empty()) {
+                    if (s[st.top()] == '(') {
+                        st.pop();
+                    } else {
+                        st.push(i);
                     }
+                } else {
+                    st.push(i);
                 }
             }
         }
-        return curMax;
+        if (st.empty()) {
+            longest = n;
+        } else {
+            int a = n, b = 0;
+            while (!st.empty()) {
+                b = st.top();
+                st.pop();
+                longest = max(longest, a - b - 1);
+                a = b;
+            }
+            longest = max(longest, a);
+        }
+        return longest;
     }
 };
