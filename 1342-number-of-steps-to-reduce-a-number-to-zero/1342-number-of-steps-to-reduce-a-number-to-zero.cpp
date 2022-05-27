@@ -1,18 +1,19 @@
+int dp[1000001] = { -1 };
+
 class Solution {
 public:
     int numberOfSteps(int num) {
-        if (num <= 1) {
-            return 0;
-        }
-        int steps = 0;
-        while (num > 0) {
-            if (num & 1) {
-                num--;
-            } else {
-                num /= 2;
+        if (dp[0] == -1) {
+            dp[0] = 0;
+            dp[1] = 1;
+            for (int i = 2; i <= 1000000; i++) {
+                if (i & 1) {
+                    dp[i] = dp[i - 1] + 1;
+                } else {
+                    dp[i] = dp[i / 2] + 1;
+                }
             }
-            steps++;
         }
-        return steps;
+        return dp[num];
     }
 };
