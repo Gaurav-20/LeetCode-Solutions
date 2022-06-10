@@ -1,7 +1,7 @@
 class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
-        unordered_map<int,int> rangeFreq;
+        unordered_map<int, int> rangeFreq;
         int low = 0, high = 0;
         int res = 0;
         int count = 0;
