@@ -12,14 +12,14 @@ public:
         dp[0] = 1.0;
         
         for (int i = 1; i <= k; i++) {
-            prev = prev - ((i > maxPts) ? dp[i - maxPts - 1] : 0.0) + dp[i - 1];
+            prev = prev - ((i >= maxPts + 1) ? dp[i - maxPts - 1] : 0.0) + dp[i - 1];
             dp[i] = prev * prob;
         }
         
         double res = dp[k];
         
         for (int i = k + 1; i <= n; i++) {
-            prev = prev - ((i > maxPts) ? dp[i - maxPts - 1] : 0.0);
+            prev = prev - ((i >= maxPts + 1) ? dp[i - maxPts - 1] : 0.0);
             dp[i] = prev * prob;
             res += dp[i];
         }
