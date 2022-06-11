@@ -1,7 +1,7 @@
 class Solution {
 public:
     int findDuplicate(vector<int>& nums) {
-        int n = size(nums);
+        int n = nums.size();
         if (n <= 1) {
             return -1;
         }
