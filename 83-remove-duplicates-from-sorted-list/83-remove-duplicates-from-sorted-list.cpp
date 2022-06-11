@@ -14,7 +14,7 @@ public:
         if (head == nullptr || head->next == nullptr)
             return head;
         ListNode* slow = head;
-        ListNode* fast = head->next;
+        ListNode* fast = head;
         while (fast != nullptr) {
             if (slow->val != fast->val) {
                 slow->next = fast;
