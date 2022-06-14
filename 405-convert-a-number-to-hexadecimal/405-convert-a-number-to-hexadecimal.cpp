@@ -10,7 +10,7 @@ public:
         unsigned int n = (unsigned int) num;
         string res = "";
         while (n > 0) {
-            res = HEX[(n & 0b1111)] + res;
+            res = HEX[(n & 0xf)] + res;
             n >>= 4;
         }
         return res;
