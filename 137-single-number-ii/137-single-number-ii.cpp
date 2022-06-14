@@ -5,7 +5,7 @@ public:
         for (int num : nums) {
             for (int i = 31; i >= 0; i--) {
                 if (num & (1 << i)) {
-                    freq[31 - i]++;
+                    freq[i]++;
                 }
             }
         }
@@ -14,7 +14,7 @@ public:
         }
         int res = 0;
         for (int i = 0; i < 32; i++) {
-            res += freq[i] * (1 << (31 - i));
+            res += freq[i] * (1 << i);
         }
         return res;
     }
