@@ -1,16 +1,5 @@
-const int mod = 1e9 + 7;
-
-int mul(int a, int b) {
-    int res = 0;
-    a = a % mod;
-    while (b > 0) {
-        if (b % 2)
-            res = (res + a) % mod;
-        a = (a * 2) % mod;
-        b /= 2;
-    }
-    return res % mod;
-}
+const int MOD = 1e9 + 7;
+#define mul(a, b) ((a % MOD) * (b % MOD)) % MOD
 
 class Solution {
 public:
@@ -29,6 +18,6 @@ public:
         for (int i = 1; i < m; i++) {
             maxVertical = max(maxVertical, verticalCuts[i] - verticalCuts[i - 1]);
         }
-        return mul(maxHorizontal, maxVertical);
+        return mul((long long) maxHorizontal, (long long) maxVertical);
     }
 };
