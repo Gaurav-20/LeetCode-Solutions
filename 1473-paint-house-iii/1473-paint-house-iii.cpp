@@ -2,10 +2,11 @@
 
 class Solution {
 public:
+    int m;
     int dp[101][101][21];
     int dfs(vector<int>& houses, vector<vector<int>>& cost, int i, int target, int lastColor) {
-        if (i >= houses.size() || target < 0) {
-            return target == 0 ? target : 1000001;
+        if (i >= m || target < 0) {
+            return target == 0 ? target : INF;
         }
         if (houses[i] != 0) {
             return dfs(houses, cost, i + 1, target - (lastColor != houses[i]), houses[i]);      
@@ -21,6 +22,7 @@ public:
         return dp[i][target][lastColor] = res;
     }
     int minCost(vector<int>& houses, vector<vector<int>>& cost, int m, int n, int target) {
+        this->m = m;
         int res = dfs(houses, cost, 0, target, 0);
         return (res >= INF) ? -1 : res;
     }
