@@ -11,23 +11,30 @@
  */
 class Solution {
 public:
-    void findRightView(TreeNode* root, int level, vector<int>& res) {
-        if (root == nullptr) {
-            return;
-        }
-        if (level == res.size()) {
-            res.push_back(root->val);
-        }
-        findRightView(root->right, level + 1, res);
-        findRightView(root->left, level + 1, res);
-    }
     
     vector<int> rightSideView(TreeNode* root) {
         if (root == nullptr) {
             return {};
         }
         vector<int> res;
-        findRightView(root, 0, res);
+        queue<TreeNode*> q;
+        q.push(root);
+        while (!q.empty()) {
+            int size = q.size();
+            while (size--) {
+                TreeNode* curr = q.front();
+                q.pop();
+                if (size == 0) {
+                    res.push_back(curr->val);
+                }
+                if (curr->left) {
+                    q.push(curr->left);
+                }
+                if (curr->right) {
+                    q.push(curr->right);
+                }
+            }
+        }
         return res;
     }
 };
