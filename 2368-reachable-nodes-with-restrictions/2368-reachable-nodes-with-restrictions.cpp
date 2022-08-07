@@ -6,11 +6,10 @@ public:
             graph[it[0]].push_back(it[1]);
             graph[it[1]].push_back(it[0]);
         }
-        unordered_map<int, bool> mp;
-        for (int r : restricted) {
-            mp[r] = true;
-        }
         vector<bool> visited(n, false);
+        for (int r : restricted) {
+            visited[r] = true;
+        }
         int res = 0;
         queue<int> q;
         q.push(0);
@@ -18,11 +17,9 @@ public:
         while (!q.empty()) {
             int curr = q.front();
             q.pop();
-            if (!mp[curr]) {
-                res++;
-            }
+            res++;
             for (auto it : graph[curr]) {
-                if (!visited[it] && !mp[it]) {
+                if (!visited[it]) {
                     visited[it] = true;
                     q.push(it);
                 }
