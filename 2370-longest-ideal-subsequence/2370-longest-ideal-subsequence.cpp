@@ -1,24 +1,26 @@
 class Solution {
 public:
     int n;
-    int solve(string& s, int idx, int prev, int& k, vector<vector<int>>& dp) {
-        if (idx >= n) {
+    int dp[50][100005];
+
+    int solve(string &s, int prev, int k, int pos) {
+        if (pos >= n) {
             return 0;
         }
-        if (dp[idx][prev] != -1) {
-            return dp[idx][prev];
+        if (dp[prev][pos] != -1) {
+            return dp[prev][pos];
         }
         int include = 0, exclude = 0;
-        if (prev == 0 || abs(s[idx] - prev) <= k) {
-            include = 1 + solve(s, idx + 1, s[idx], k, dp);
+        if (prev == 26 || abs(prev - s[pos] + 'a') <= k) {
+            include = 1 + solve(s, s[pos] - 'a', k, pos + 1);
         }
-        exclude = solve(s, idx + 1, prev, k, dp);
-        return dp[idx][prev] = max(include, exclude);
+        exclude = solve(s, prev, k, pos + 1);
+        return dp[prev][pos] = max(include, exclude);
     }
-    
+
     int longestIdealString(string s, int k) {
         n = s.size();
-        vector<vector<int>> dp(n + 1, vector<int>(150, -1));
-        return solve(s, 0, 0, k, dp);
+        memset(dp, -1, sizeof(dp));
+        return solve(s, 26, k, 0);
     }
 };
