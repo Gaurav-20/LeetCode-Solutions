@@ -11,27 +11,19 @@
  */
 class Solution {
 public:
-    void inorder(TreeNode* root, vector<int>& res) {
+    bool traverse(TreeNode* root, unordered_set<int>& st, int k) {
         if (root == nullptr) {
-            return;
+            return false;
         }
-        inorder(root->left, res);
-        res.push_back(root->val);
-        inorder(root->right, res);
+        if (st.count(k - root->val)) {
+            return true;
+        }
+        st.insert(root->val);
+        return traverse(root->left, st, k) || traverse(root->right, st, k);
     }
     
     bool findTarget(TreeNode* root, int k) {
-        vector<int> res; 
-        inorder(root, res);
-        int low = 0, high = res.size() - 1;
-        while (low < high) {
-            int sum = res[low] + res[high];
-            if (sum == k) {
-                return true;
-            }
-            low += (sum < k);
-            high -= (sum > k);
-        }
-        return false;
+        unordered_set<int> st;
+        return traverse(root, st, k);
     }
 };
