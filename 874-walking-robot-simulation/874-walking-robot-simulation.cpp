@@ -3,52 +3,23 @@ public:
     
     int robotSim(vector<int>& commands, vector<vector<int>>& obstacles) {
         // NORTH = 0, EAST = 1, SOUTH = 2, WEST = 3
-        int direction = 0;
-        int posX = 0, posY = 0;
-        int res = 0;
+        int d = 0;
+        int posX = 0, posY = 0, res = 0;
+        vector<vector<int>> dir = { { 0, 1 }, { 1, 0 }, { 0, -1 }, { -1, 0 } };
         map<vector<int>, bool> mp;
         for (auto it : obstacles) {
             mp[it] = true;
         }
-        for (auto cmd : commands) {
+        for (int cmd : commands) {
             if (cmd == -2) {
-                direction = (direction + 3) % 4;
+                d = (d + 3) % 4;
             } else if (cmd == -1) {
-                direction = (direction + 1) % 4;
+                d = (d + 1) % 4;
             } else {
                 int moves = cmd;
-                if (direction == 0) {
-                    while (moves > 0) {
-                        if (mp[{ posX, posY + 1 }]) {
-                            break;
-                        }
-                        posY++;
-                        moves--;
-                    }
-                } else if (direction == 1) {
-                    while (moves > 0) {
-                        if (mp[{ posX + 1, posY }]) {
-                            break;
-                        }
-                        posX++;
-                        moves--;
-                    }
-                } else if (direction == 2) {
-                    while (moves > 0) {
-                        if (mp[{ posX, posY - 1 }]) {
-                            break;
-                        }
-                        posY--;
-                        moves--;
-                    }
-                } else {
-                    while (moves > 0) {
-                        if (mp[{ posX - 1, posY }]) {
-                            break;
-                        }
-                        posX--;
-                        moves--;
-                    }
+                while (moves-- && !mp[{ posX + dir[d][0], posY + dir[d][1] }]) {
+                    posX += dir[d][0];
+                    posY += dir[d][1];
                 }
                 res = max(res, (posX * posX + posY * posY));
             }
