@@ -23,9 +23,8 @@ public:
                             int ny = qy + dirY[d];
                             if (nx >= 0 && ny >= 0 && nx < rows && ny < cols 
                                 && grid[nx][ny] == '1' && !visited[nx][ny]) {
-                                q.push({nx, ny});
+                                q.push({ nx, ny });
                                 visited[nx][ny] = true;
-
                             }
                         }
                     }
