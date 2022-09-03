@@ -1,38 +1,41 @@
 class Solution {
 public:
     
+    int countDigits(long long num) {
+        return floor(log10(num) + 1);
+    }
+    
     vector<int> numsSameConsecDiff(int n, int k) {
         vector<int> res;
-        queue<string> q;
-        unordered_set<string> st;
-        for (int c = 1; c <= 9; c++) {
-            string temp = to_string(c);
-            st.insert(temp);
-            q.push(temp);
+        queue<long long> q;
+        unordered_set<long long> st;
+        for (long long i = 1; i <= 9; i++) {
+            st.insert(i);
+            q.push(i);
         }
         while (!q.empty()) {
-            string curr = q.front();
+            long long curr = q.front();
             q.pop();
-            if (curr.size() == n) {
-                res.push_back(stoi(curr));
+            if (countDigits(curr) == n) {
+                res.push_back(curr);
                 continue;
             }
-            int last = curr.back() - '0';
+            int last = curr % 10;
             if (last + k <= 9) {
-                curr.push_back(last + k + '0');
+                curr = (curr * 10) + last + k;
                 if (st.find(curr) == st.end()) {
                     q.push(curr);
                     st.insert(curr);
                 }
-                curr.pop_back();
+                curr /= 10;
             }
             if (last - k >= 0) {
-                curr.push_back(last - k + '0');
+                curr = curr * 10 + last - k;
                 if (st.find(curr) == st.end()) {
                     q.push(curr);
                     st.insert(curr);
                 }
-                curr.pop_back();
+                curr /= 10;
             }
         }
         return res;
