@@ -11,19 +11,13 @@ public:
         }
         for (int i = 0; i < q; i++) {
             int val = queries[i][0], index = queries[i][1];
-            int cur = nums[index];
-            bool evenVal = val % 2 == 0;
-            bool evenCur = cur % 2 == 0;
-            if (evenVal && evenCur) {
-                sum += val;
-            } else if (!evenVal && !evenCur) {
-                sum += cur + val;
-            } else if (!evenVal && evenCur) {
-                sum -= cur;
-            } else {
-                // do nothing
+            if (nums[index] % 2 == 0) {
+                sum -= nums[index];
             }
             nums[index] += val;
+            if (nums[index] % 2 == 0) {
+                sum += nums[index];
+            }
             res[i] = sum;
         }
         return res;
