@@ -1,10 +1,15 @@
 class Solution {
 public:
     bool checkIfPangram(string sentence) {
-        unordered_set<char> st;
+        vector<int> freq(26, 0);
         for (char c : sentence) {
-            st.insert(c);
+            freq[c - 'a']++;
         }
-        return st.size() == 26;
+        for (int i = 0; i < 26; i++) {
+            if (freq[i] == 0) {
+                return false;
+            }
+        }
+        return true;
     }
 };
