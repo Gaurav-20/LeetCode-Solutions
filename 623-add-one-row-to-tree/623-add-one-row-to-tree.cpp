@@ -16,21 +16,33 @@ public:
             TreeNode* newRoot = new TreeNode(val);
             newRoot->left = root;
             return newRoot;
-        } else if (depth == 0) {
-            TreeNode* newRoot = new TreeNode(val);
-            newRoot->right = root;
-            return newRoot;
         }
-        if (root == nullptr) {
-            return root;
-        } else if (depth == 2) {
-            root->left  = addOneRow(root->left,  val, 1);
-            root->right = addOneRow(root->right, val, 0);
-            return root;
-        } else if (depth > 2) {
-            root->left  = addOneRow(root->left,  val, depth - 1);
-            root->right = addOneRow(root->right, val, depth - 1);
+        queue<TreeNode*> q;
+        q.push(root);
+        for (int i = 0; i < depth - 2; i++) {
+            int size = q.size();
+            for (int j = 0; j < size; j++) {
+                TreeNode* temp = q.front();
+                q.pop();
+                if (temp->left) {
+                    q.push(temp->left);
+                }
+                if (temp->right) {
+                    q.push(temp->right);
+                }
+            }
+        }
+        while (!q.empty()) {
+            TreeNode* curr = q.front();
+            q.pop();
+            TreeNode* temp = curr->left;
+            curr->left = new TreeNode(val);
+            curr->left->left = temp;
+            temp = curr->right;
+            curr->right = new TreeNode(val);
+            curr->right->right = temp;
         }
         return root;
+
     }
 };
