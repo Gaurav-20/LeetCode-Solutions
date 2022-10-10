@@ -5,15 +5,14 @@ public:
         if (n == 1) {
             return "";
         }
-        int low = 0, high = n - 1;
+        int it = 0;
         bool allAs = true;
-        while (low < high) {
-            if (palindrome[low] == 'a') {
-                low++;
-                high--;
+        while (it < (n / 2)) {
+            if (palindrome[it] == 'a') {
+                it++;
             } else {
                 allAs = false;
-                palindrome[low] = 'a';
+                palindrome[it] = 'a';
                 break;
             }
         }
