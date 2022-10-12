@@ -2,17 +2,16 @@ class Solution {
 public:
     int stoneGameVI(vector<int>& aliceValues, vector<int>& bobValues) {
         int n = aliceValues.size();
-        vector<vector<int>> vec(n);
+        vector<int> idx(n);
+        iota(idx.begin(), idx.end(), 0);
+        sort(idx.begin(), idx.end(), [&](int i, int j) {
+            return aliceValues[i] + bobValues[i] > aliceValues[j] + bobValues[j];
+        });
         int res = 0;
         for (int i = 0; i < n; i++) {
-            int av = aliceValues[i], bv = bobValues[i];
-            vec[i] = { av + bv, av, bv };
+            res += i % 2 ? 0 : aliceValues[idx[i]]; // Alice turn
+            res -= i % 2 ? bobValues[idx[i]] : 0; // Bob turn
         }
-        sort(vec.begin(), vec.end());
-        for (int i = 0; i < n; i++) {
-            res += (i % 2) ? 0 : vec[n - i - 1][1]; // Alice turn
-            res -= (i % 2) ? vec[n - i - 1][2] : 0; // Bob turn
-        }    
         return (res > 0) - (res < 0); // signum function
     }
 };
