@@ -2,9 +2,9 @@ class Solution {
 public:
     vector<vector<string>> mostPopularCreator(vector<string>& creators, vector<string>& ids, vector<int>& views) {
         int n = views.size();
-        unordered_map<string, string> creatorToIds;
-        unordered_map<string, long long> creatorToViews;
-        unordered_map<string, long long> creatorToMostViewed;
+        map<string, string> creatorToIds;
+        map<string, long long> creatorToViews;
+        map<string, long long> creatorToMostViewed;
         for (int i = 0; i < n; i++) {
             if (creatorToMostViewed[creators[i]] < views[i]) {
                 creatorToMostViewed[creators[i]] = views[i];
