@@ -1,9 +1,9 @@
 class TrieNode {
 public:
-    bool isEnd;
+    string word;
     vector<TrieNode*> children;
     TrieNode() {
-        isEnd = false;
+        word = "";
         children = vector<TrieNode*>(26, nullptr);
     }
 };
@@ -33,7 +33,7 @@ public:
             }
             curr = curr->children[index];
         }
-        curr->isEnd = true;
+        curr->word = word;
     }
 };
 
@@ -42,39 +42,32 @@ public:
     vector<string> findWords(vector<vector<char>>& board, vector<string>& words) {
         Trie* trie = new Trie(words);
         TrieNode* root = trie->getRoot();
-        unordered_set<string> resultSet;
+        vector<string> result;
         for (int x = 0; x < board.size(); x++) {
             for (int y = 0; y < board[0].size(); y++) {
-                findWords(board, x, y, root, "", resultSet);
+                findWords(board, x, y, root, result);
             }
-        }
-
-        vector<string> result;
-        for (auto it : resultSet) {
-            result.push_back(it);
         }
         return result;
     }
+
 private:
-    void findWords(vector<vector<char>>& board, int x, int y, TrieNode* root, string word, unordered_set<string>& result) {
-        if (x < 0 || x >= board.size() || y < 0 || y >= board[0].size() || board[x][y] == ' ') {
+    void findWords(vector<vector<char>>& board, int x, int y, TrieNode* root, vector<string>& result) {
+        if (x < 0 || x >= board.size() || y < 0 || y >= board[0].size() || board[x][y] == '#' ||
+           !root->children[board[x][y] - 'a']) {
             return;
         }
-        
-        if (root->children[board[x][y] - 'a']) {
-            word = word + board[x][y];
-            root = root->children[board[x][y] - 'a']; 
-            if (root->isEnd) {
-                result.insert(word);
-                root->isEnd = false;
-            }
-            char c = board[x][y];
-            board[x][y] = ' ';
-            findWords(board, x + 1, y, root, word, result);
-            findWords(board, x - 1, y, root, word, result);
-            findWords(board, x, y + 1, root, word, result);
-            findWords(board, x, y - 1, root, word, result);
-            board[x][y] = c;
+        root = root->children[board[x][y] - 'a']; 
+        if (root->word != "") {
+            result.push_back(root->word);
+            root->word = "";
         }
+        char c = board[x][y];
+        board[x][y] = '#';
+        findWords(board, x + 1, y, root, result);
+        findWords(board, x - 1, y, root, result);
+        findWords(board, x, y + 1, root, result);
+        findWords(board, x, y - 1, root, result);
+        board[x][y] = c;
     }
 };
