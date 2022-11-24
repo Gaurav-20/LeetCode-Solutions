@@ -1,11 +1,10 @@
-int dirX[4] = {0, 0, 1, -1};
-int dirY[4] = {1, -1, 0, 0};
+int dir[5] = { 0, 1, 0, -1, 0 };
 
 class Solution {
 public:
     int m, n;
     
-    bool isValid(vector<vector<char>>& board, int i, int j, vector<vector<bool>>& visited) {
+    bool isValid(int i, int j, vector<vector<bool>>& visited) {
         return (i >= 0 && j >= 0 && i < m && j < n && !visited[i][j]);
     }
     
@@ -15,9 +14,8 @@ public:
             return true;
         }
         for (int i = 0; i < 4; i++) {
-            int nx = x + dirX[i];
-            int ny = y + dirY[i];
-            if (isValid(board, nx, ny, visited) && board[nx][ny] == word[index]) {
+            int nx = x + dir[i], ny = y + dir[i + 1];
+            if (isValid(nx, ny, visited) && board[nx][ny] == word[index]) {
                 if (dfs(board, nx, ny, visited, word, index + 1)) {
                     return true;
                 }
