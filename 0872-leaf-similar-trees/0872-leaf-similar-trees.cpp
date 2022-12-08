@@ -26,16 +26,6 @@ public:
         vector<int> leaf1, leaf2;
         inorder(root1, leaf1);
         inorder(root2, leaf2);
-        int i = 0, n = leaf1.size(), m = leaf2.size();
-        if (n != m) {
-            return false;
-        }
-        while (i < n) {
-            if (leaf1[i] != leaf2[i]) {
-                return false;
-            }
-            i++;
-        }
-        return true;
+        return leaf1 == leaf2;
     }
 };
