@@ -2,7 +2,7 @@ class Solution {
 public:
     int longestSquareStreak(vector<int>& nums) {
         int n = nums.size();
-        set<int> s;
+        unordered_set<int> s;
         for (int i : nums) {
             s.insert(i);
         }
