@@ -3,18 +3,18 @@ public:
     vector<int> dailyTemperatures(vector<int>& temperatures) {
         int n = temperatures.size();
         vector<int> res(n, 0);
-        stack<pair<int, int>> st;
-        st.push({ temperatures[n - 1], n - 1 });
+        vector<pair<int, int>> st; // vector as a stack
+        st.push_back({ temperatures[n - 1], n - 1 });
         for (int i = n - 2; i >= 0; i--) {
-            while (!st.empty() && st.top().first <= temperatures[i]) {
-                st.pop();
+            while (st.size() > 0 && st.back().first <= temperatures[i]) {
+                st.pop_back();
             }
-            if (st.empty()) {
+            if (st.size() == 0) {
                 res[i] = 0;
             } else {
-                res[i] = st.top().second - i;
+                res[i] = st.back().second - i;
             }
-            st.push({ temperatures[i], i });
+            st.push_back({ temperatures[i], i });
         }
         return res;
     }
