@@ -1,17 +1,17 @@
 class Solution {
 public:
     
-    void solve(vector<vector<int>>& tree, int node, int prevNode,
+    void solve(vector<vector<int>>& tree, int node, vector<bool>& visited,
         vector<int>& charCount, string& labels, vector<int>& res) {
-
+        
+        visited[node] = true;
         int index = labels[node] - 'a';
         int prevCount = charCount[index];
         charCount[index]++;
-        for (auto nextNode : tree[node]) {
-            if (prevNode == nextNode) {
-                continue;
+        for (auto neigh : tree[node]) {
+            if (!visited[neigh]) {
+                solve(tree, neigh, visited, charCount, labels, res);
             }
-            solve(tree, nextNode, node, charCount, labels, res);
         }
         res[node] = charCount[index] - prevCount;
     }
@@ -23,8 +23,9 @@ public:
             tree[edge[1]].push_back(edge[0]);
         }
         vector<int> res(n, 0);
+        vector<bool> visited(n, false);
         vector<int> charCount(26, 0);
-        solve(tree, 0, 0, charCount, labels, res);
+        solve(tree, 0, visited, charCount, labels, res);
         return res;
     }
 };
