@@ -9,22 +9,12 @@
 class Solution {
 public:
     bool makeStringsEqual(string s, string target) {
-        if (s == target) {
-            return true;
+        // we just need to check if both s and target have atlease one 1
+        bool sContainsOne = false, targetContainsOne = false;
+        for (int i = 0; i < s.size(); i++) {
+            sContainsOne |= s[i] == '1';
+            targetContainsOne |= target[i] == '1';
         }
-        int n = s.size(), corr = 0, ct = 0;
-        for (int i = 0; i < n; i++) {
-            if (s[i] != target[i]) {
-                ct++;
-            }
-            if (s[i] == '1') {
-                corr++;
-            }
-        }
-        string check = "";
-        for (int i = 0; i < n; i++) {
-            check += '0';
-        }
-        return corr > 0 && target != check;
+        return s == target || (sContainsOne && targetContainsOne);
     }
 };
