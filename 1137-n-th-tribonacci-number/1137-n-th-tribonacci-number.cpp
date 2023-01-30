@@ -1,7 +1,6 @@
+int tribo[38] = { -1 };
 class Solution {
 public:
-    int tribo[38] = { -1 };
-
     int tribonacci(int n) {
         if (tribo[0] == -1) {
             tribo[0] = 0;
