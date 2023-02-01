@@ -6,7 +6,7 @@ public:
         }
         int m = str1.size(), n = str2.size();
         string res = "";
-        for (int i = 1; i <= m; i++) {
+        for (int i = m; i > 0; i--) {
             string prefix = str1.substr(0, i);
             int len = prefix.size();
             if (m % len == 0 && n % len == 0) {
@@ -19,10 +19,10 @@ public:
                     temp2 += prefix;
                 }
                 if (temp1 == str1 && temp2 == str2) {
-                    res = (prefix.size() > res.size()) ? prefix : res;
+                    return prefix;
                 }
             }
         }
-        return res;
+        return "";
     }
 };
