@@ -1,39 +1,25 @@
 class Solution {
 public:
     string convert(string s, int numRows) {
-        if (numRows == 1) {
+        if (numRows <= 1) {
             return s;
         }
         int n = s.size();
-        vector<vector<char>> vec(numRows, vector<char>(n, ' '));
-        int row = 0, col = 0;
+        unordered_map<int, vector<char>> mp;
+        int row = 0, step = 1;
         for (int i = 0; i < n; i++) {
-            if (row == numRows) {
-                row--;
-                row--;
-                col++;
-                while (row > 0) {
-                    vec[row][col] = s[i++];
-                    if (i == n) {
-                        break;
-                    }
-                    row--;
-                    col++;
-                }
-                i--;
-            } else {
-                vec[row][col] = s[i];
-                row++;
+            mp[row].push_back(s[i]);
+            if (row == 0) {
+                step = 1;
+            } else if (row == numRows - 1) {
+                step = -1;
             }
+            row += step;
         }
         string res;
-        for (vector<char> x : vec) { 
-            for (char c : x) {
-                if (c == ' ') {
-                    continue;
-                } else {
-                    res += c;
-                }
+        for (int i = 0; i < numRows; i++) { 
+            for (char c : mp[i]) {
+                res += c;
             }
         }
         return res;
