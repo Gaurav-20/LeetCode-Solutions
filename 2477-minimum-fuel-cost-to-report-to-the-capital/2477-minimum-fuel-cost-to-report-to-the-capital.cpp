@@ -1,4 +1,5 @@
 #define ll long long
+
 class Solution {
 public:
     
@@ -20,9 +21,9 @@ public:
     long long minimumFuelCost(vector<vector<int>>& roads, int seats) {
         int n = roads.size();
         vector<vector<int>> adj(n + 1);
-        for (int i = 0; i < n; i++) {
-            adj[roads[i][0]].push_back(roads[i][1]);
-            adj[roads[i][1]].push_back(roads[i][0]);
+        for (auto road : roads) {
+            adj[road[0]].push_back(road[1]);
+            adj[road[1]].push_back(road[0]);
         }
         vector<bool> vis(n + 1, false);
         ll res = 0;
