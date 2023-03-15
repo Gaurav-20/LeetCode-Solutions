@@ -10,40 +10,27 @@
  * };
  */
 
-struct Node {
-    TreeNode* curr;
-    int index;
-};
-
 class Solution {
 public:
     bool isCompleteTree(TreeNode* root) {
         if (root == nullptr) {
             return true;
         }
-        queue<Node> q;
-        q.push({ root, 0 });
-        int level = 0;
+        queue<TreeNode*> q;
+        q.push(root);
+        bool end = false;
         while (!q.empty()) {
-            int size = q.size();
-            for (int i = 0; i < size; i++) {
-                TreeNode* curr = q.front().curr;
-                int index = q.front().index;
-                q.pop();
-                if (index != i) {
+            TreeNode* curr = q.front();
+            q.pop();
+            if (curr == nullptr) {
+                end = true;
+            } else {
+                if (end) {
                     return false;
                 }
-                if (curr->left) {
-                    q.push({ curr->left, index * 2 });
-                }
-                if (curr->right) {
-                    q.push({ curr->right, index * 2 + 1 });
-                }
+                q.push(curr->left);
+                q.push(curr->right);
             }
-            if (!q.empty() && size != pow(2, level)) {
-                return false;
-            }
-            level++;
         }
         return true;
     }
