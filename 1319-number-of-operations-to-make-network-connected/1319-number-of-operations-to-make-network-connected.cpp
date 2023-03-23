@@ -11,12 +11,16 @@ public:
     }
     
     int makeConnected(int n, vector<vector<int>>& connections) {
+        int numCables = connections.size();
+        if (numCables < n - 1) {
+            return -1;
+        }
         vector<vector<int>> graph(n);
         for (auto it : connections) {
             graph[it[0]].push_back(it[1]);
             graph[it[1]].push_back(it[0]);
         }
-        int numCables = connections.size(), numComponents = 0;
+        int numComponents = 0;
         vector<bool> visited(n, false);
         for (int i = 0; i < n; i++) {
             if (!visited[i]) {
@@ -24,9 +28,6 @@ public:
                 numComponents++;
                 dfs(graph, i, visited);
             }
-        }
-        if (numCables < n - 1 || numCables < numComponents) {
-            return -1;
         }
         return numComponents - 1;
     }
