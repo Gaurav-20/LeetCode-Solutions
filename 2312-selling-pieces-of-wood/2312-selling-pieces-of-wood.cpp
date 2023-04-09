@@ -17,15 +17,19 @@ public:
     // }
     
     long long sellingWood(int m, int n, vector<vector<int>>& prices) {
-        map<pair<int, int>, ll> mp;
+        // map<pair<int, int>, ll> mp;
+        // vector<vector<ll>> dp(m + 1, vector<ll>(n + 1, -1LL));
+        vector<vector<ll>> dp(m + 1, vector<ll>(n + 1, 0LL)); // handle base case by zero init
         for (auto it : prices) {
-            mp[{ it[0], it[1] }] = it[2];
+            // mp[{ it[0], it[1] }] = it[2];
+            // space optimization, store mp in dp array itself
+            dp[it[0]][it[1]] = it[2];
         }
-        vector<vector<ll>> dp(m + 1, vector<ll>(n + 1, -1LL));
         // return rec(m, n, mp, dp);
-        for (int row = 0; row <= m; row++) {
+        for (int row = 1; row <= m; row++) {
             for (int col = 1; col <= n; col++) {
-                ll res = mp[{ row, col }];
+                // ll res = mp[{ row, col }];
+                ll res = dp[row][col];
                 for (int i = 1; i <= row / 2; i++) {
                     res = max(res, dp[i][col] + dp[row - i][col]);
                 }
