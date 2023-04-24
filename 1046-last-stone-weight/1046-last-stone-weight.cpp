@@ -13,12 +13,9 @@ public:
             if (first == second) {
                 continue;
             } else {
-                pq.push(first - second);
+                pq.push(abs(first - second));
             }
         }
-        if (pq.size() == 0) {
-            return 0;
-        }
-        return pq.top();
+        return (pq.size() == 1) ? pq.top() : 0;
     }
 };
