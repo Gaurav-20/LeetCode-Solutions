@@ -1,8 +1,14 @@
 class Solution {
 public:
     double average(vector<int>& salary) {
-        sort(salary.begin(), salary.end());
-        double sum = (double) accumulate(salary.begin() + 1, salary.end() - 1, 0);
+        int minSalary = *min_element(salary.begin(), salary.end());
+        int maxSalary = *max_element(salary.begin(), salary.end());
+        double sum = 0.0;
+        for (int& sal: salary) {
+            if (sal != maxSalary && sal != minSalary) {
+                sum += sal;
+            }
+        }
         return sum / (salary.size() - 2);
     }
 };
