@@ -12,19 +12,18 @@ class Solution {
 public:
     int n;
     
-    bool isValidCell(vector<vector<int>>& grid, vector<vector<bool>>& visited, int x, int y) {
-        return x >= 0 && y >= 0 && x < n && y < n && (grid[x][y] == 0) && !visited[x][y];
+    bool isValidCell(vector<vector<int>>& grid, int x, int y) {
+        return x >= 0 && y >= 0 && x < n && y < n && (grid[x][y] == 0);
     }
     
     int shortestPathBinaryMatrix(vector<vector<int>>& grid) {
-        if (grid[0][0] == 1) {
+        n = grid.size();
+        if (grid[0][0] == 1 || grid[n - 1][n - 1] == 1) {
             return -1;
         }
-        n = grid.size();
         queue<Cell> q;
-        vector<vector<bool>> visited(n, vector<bool>(n, false));
         q.push({ 0, 0, 1 });
-        visited[0][0] = true;
+        grid[0][0] = -1; // visited is -1
         while (!q.empty()) {
             Cell curr = q.front();
             q.pop();
@@ -34,8 +33,8 @@ public:
             for (auto dir: directions) {
                 int nextXCoordinate = curr.xCoordinate + dir[0];
                 int nextYCoordinate = curr.yCoordinate + dir[1];
-                if (isValidCell(grid, visited, nextXCoordinate, nextYCoordinate)) {
-                    visited[nextXCoordinate][nextYCoordinate] = true;
+                if (isValidCell(grid, nextXCoordinate, nextYCoordinate)) {
+                    grid[nextXCoordinate][nextYCoordinate] = -1;
                     q.push({ nextXCoordinate, nextYCoordinate, curr.distance + 1 });
                 }
             }
