@@ -1,47 +1,42 @@
-struct Node {
-    int x;
-    int y;
-    int d;
+struct Cell {
+    int xCoordinate;
+    int yCoordinate;
+    int distance;
 };
 
-bool visited[101][101];
-
-bool isValid(vector<vector<int>>& grid, int x, int y, int n) {
-    return x >= 0 && y >= 0 && x < n && y < n && !visited[x][y] && grid[x][y] == 0;
-}
+vector<vector<int>> directions = {
+    { -1, -1 }, { -1, 0 }, { -1, 1 }, { 0, -1 }, { 0, 1 }, { 1, -1 }, { 1, 0 }, { 1, 1 }
+};
 
 class Solution {
 public:
+    int n;
+    
+    bool isValidCell(vector<vector<int>>& grid, vector<vector<bool>>& visited, int x, int y) {
+        return x >= 0 && y >= 0 && x < n && y < n && (grid[x][y] == 0) && !visited[x][y];
+    }
+    
     int shortestPathBinaryMatrix(vector<vector<int>>& grid) {
-        int n = grid.size();
-        if (grid[0][0] == 1 || grid[n - 1][n - 1] == 1) {
+        if (grid[0][0] == 1) {
             return -1;
         }
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                visited[i][j] = false;
-            }
-        }
-        queue<Node> q;
+        n = grid.size();
+        queue<Cell> q;
+        vector<vector<bool>> visited(n, vector<bool>(n, false));
         q.push({ 0, 0, 1 });
         visited[0][0] = true;
         while (!q.empty()) {
-            Node node = q.front();
+            Cell curr = q.front();
             q.pop();
-            if (node.x == n - 1 && node.y == n - 1) {
-                return node.d;
+            if (curr.xCoordinate == n - 1 && curr.yCoordinate == n - 1) {
+                return curr.distance;
             }
-            for (int i = -1; i <= 1; i++) {
-                for (int j = -1; j <= 1; j++) {
-                    if (i == 0 && j == 0) {
-                        continue;
-                    }
-                    int nextX = node.x + i;
-                    int nextY = node.y + j;
-                    if (isValid(grid, nextX, nextY, n)) {
-                        visited[nextX][nextY] = true;
-                        q.push({ nextX, nextY, node.d + 1 });
-                    }
+            for (auto dir: directions) {
+                int nextXCoordinate = curr.xCoordinate + dir[0];
+                int nextYCoordinate = curr.yCoordinate + dir[1];
+                if (isValidCell(grid, visited, nextXCoordinate, nextYCoordinate)) {
+                    visited[nextXCoordinate][nextYCoordinate] = true;
+                    q.push({ nextXCoordinate, nextYCoordinate, curr.distance + 1 });
                 }
             }
         }
