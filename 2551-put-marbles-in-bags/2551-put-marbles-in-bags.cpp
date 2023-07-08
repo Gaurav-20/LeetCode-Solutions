@@ -7,12 +7,9 @@ public:
             wts.push_back(weights[i - 1] + weights[i]);
         }
         sort(wts.begin(), wts.end());
-        long long mini = 0;
+        long long mini = 0, maxi = 0;;
         for (int i = 0; i < k - 1; i++) {
             mini += wts[i];
-        }
-        long long maxi = 0;
-        for (int i = 0; i < k - 1; i++) {
             maxi += wts[wts.size() - i - 1];
         }
         return maxi - mini;
