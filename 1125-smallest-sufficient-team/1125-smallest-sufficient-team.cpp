@@ -19,14 +19,14 @@ public:
     }
 
     vector<int> bfs(int target, vector<vector<string>>& people) {
-        deque<pair<int, vector<int>>> q;
+        queue<pair<int, vector<int>>> q;
         vector<int> start;
-        q.push_back({ 0, start });
+        q.push({ 0, start });
         unordered_set<int> seen;
         seen.insert(0);
         while (!q.empty()) {
             auto currPair = q.front();
-            q.pop_front();
+            q.pop();
             int currMask = currPair.first;
             vector<int> currTeam = currPair.second;
             if (currMask == target) {
@@ -38,7 +38,7 @@ public:
                 int nextMask = currMask | computeMask(people[i]);
                 if (seen.count(nextMask) == 0) {
                     seen.insert(nextMask);
-                    q.push_back({ nextMask, nextTeam });
+                    q.push({ nextMask, nextTeam });
                 }
             }
         }
