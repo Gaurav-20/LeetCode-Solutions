@@ -24,7 +24,7 @@ public:
     }
     
     bool divideArray(vector<int>& nums) {
-        return timeEfficientSolution(nums);
-        // return spaceEfficientSolution(nums);
+        // return timeEfficientSolution(nums);
+        return spaceEfficientSolution(nums);
     }
 };
