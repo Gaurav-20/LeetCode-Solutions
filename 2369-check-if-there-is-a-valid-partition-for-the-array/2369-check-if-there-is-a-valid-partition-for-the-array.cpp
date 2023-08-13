@@ -1,35 +1,26 @@
 class Solution {
 public:
-    int n;
-    
-    int solve(vector<int>& nums, int i, vector<int>& dp) {
-        if (i >= n) {
-            return 1;
-        }
-        if (dp[i] != -1) {
-            return dp[i];
-        }
-        if (i + 1 < n && nums[i] == nums[i + 1]) {
-            if (solve(nums, i + 2, dp)) {
-                return 1;
-            }
-            if (i + 2 < n && nums[i] == nums[i + 2]) {
-                if (solve(nums, i + 3, dp)) {
-                    return 1;
-                }
-            }
-        }
-        if (i + 2 < n && nums[i] == nums[i + 1] - 1 && nums[i] == nums[i + 2] - 2) {
-            if (solve(nums, i + 3, dp)) {
-                return 1;
-            }
-        }
-        return dp[i] = 0;
-    }
-    
     bool validPartition(vector<int>& nums) {
-        n = nums.size();
-        vector<int> dp(n, -1);
-        return solve(nums, 0, dp);
+        int n = nums.size();
+        if (n == 1) {
+            return false;
+        }
+        vector<bool> dp = { true, false, n > 1 && nums[0] == nums[1] };
+        for (int i = 2; i < n; i++) {
+            bool current = false;
+            if (nums[i] == nums[i - 1] && dp[1]) {
+                current = true;
+            }
+            else if (nums[i] == nums[i - 1] && nums[i] == nums[i - 2] && dp[0]) {
+                current = true;
+            }
+            else if (nums[i] - nums[i - 1] == 1 && nums[i - 1] - nums[i - 2] == 1 && dp[0]) {
+                current = true;
+            }
+            dp[0] = dp[1];
+            dp[1] = dp[2];
+            dp[2] = current;
+        }
+        return dp[2];
     }
 };
