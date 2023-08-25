@@ -1,12 +1,12 @@
 class Solution {
 public:
-    vector<string> ans;
+    vector<string> res;
 
     string space(int c) {
         return string(c, ' ');
     }
-
-    vector<string> print_wIdx(vector<string>& words, vector<pair<vector<int>, int>>& wIdx, int maxWidth) {
+    
+    vector<string> printWithIdx(vector<string>& words, vector<pair<vector<int>, int>>& wIdx, int maxWidth) {
         for (int i = 0; i < wIdx.size(); i++) {
             int numWords = wIdx[i].first.size();
             int totalLen = wIdx[i].second;
@@ -20,26 +20,24 @@ public:
                 remainingSpaces = totalSpaces % numGaps;
             }
 
-            string line = words[wIdx[i].first[0]]; // Start with the first word
+            string line = words[wIdx[i].first[0]];
             for (int j = 1; j < numWords; j++) {
                 if (i == wIdx.size() - 1) {
-                    // Last line, left justify
                     line += space(1);
-                } 
-                else {
+                } else {
                     line+= space(numSpaces+(remainingSpaces>0?1:0));
                     remainingSpaces--;
                 }
-                line+= words[wIdx[i].first[j]];
+                line += words[wIdx[i].first[j]];
             }
 
             if (line.size() < maxWidth)
                 line+= space(maxWidth-line.size());
 
-            ans.push_back(line);
+            res.push_back(line);
         }
 
-        return ans;
+        return res;
     }
 
     vector<string> fullJustify(vector<string>& words, int maxWidth) {
@@ -48,21 +46,18 @@ public:
         int cur = 0;
         int len = 0;
         for (int i = 0; i < n; i++) {
-            //wlen=sum of length of words w/o space in 1 line
             int wlen = words[i].size();
             len += wlen;
             if (len > maxWidth) {
-                wIdx.push_back({{i}, wlen});
+                wIdx.push_back({ { i }, wlen });
                 cur++;
                 len = wlen;
-            } 
-            else {
+            } else {
                 wIdx[cur].first.push_back(i);
                 wIdx[cur].second += wlen;
             }
-            len++; //at least 1 whitespace between words
+            len++;
         }
-
-        return print_wIdx(words, wIdx, maxWidth);
+        return printWithIdx(words, wIdx, maxWidth);
     }
 };
