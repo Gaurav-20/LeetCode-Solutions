@@ -10,12 +10,11 @@ public:
             } else {
                 score--;
             }
-            if (score > maxScore){
+            if (score > maxScore) {
                 maxScore = score;
                 earliestHour = i;
             }
         }
-        return earliestHour == -1 ? 0 : earliestHour + 1;
-        
+        return (earliestHour == -1) ? 0 : earliestHour + 1;
     }
 };
