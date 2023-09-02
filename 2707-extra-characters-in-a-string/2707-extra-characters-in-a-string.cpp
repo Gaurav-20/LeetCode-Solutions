@@ -1,23 +1,44 @@
+class TrieNode {
+public:
+    unordered_map<char, TrieNode*> children;
+    bool isEndOfWord;
+};
+
 class Solution {
 public:
+
+    TrieNode* buildTrie(vector<string>& dictionary) {
+        auto root = new TrieNode();
+        for (string& word : dictionary) {
+            auto node = root;
+            for (char& c : word) {
+                if (node->children.find(c) == node->children.end()) {
+                    node->children[c] = new TrieNode();
+                }
+                node = node->children[c];
+            }
+            node->isEndOfWord = true;
+        }
+        return root;
+    }
+    
     int minExtraChar(string s, vector<string>& dictionary) {
         int n = s.size();
-        unordered_map<string, int> mp;
-        for (string& word: dictionary) {
-            mp[word]++;
-        }
+        auto root = buildTrie(dictionary);
         vector<int> dp(n + 1, 0);
-        for (int index = n - 1; index >= 0; index--) {
-            string curr = "";
-            int minExtra = n;
-            for (int cutIdx = index; cutIdx < n; cutIdx++) {
-                curr.push_back(s[cutIdx]);
-                int currExtra = (mp.count(curr)) ? 0 : curr.size();
-                int nextExtra = dp[cutIdx + 1];
-                int totalExtra = currExtra + nextExtra;
-                minExtra = min(minExtra, totalExtra);
+        
+        for (int start = n - 1; start >= 0; start--) {
+            dp[start] = dp[start + 1] + 1;
+            auto node = root;
+            for (int end = start; end < n; end++) {
+                if (node->children.find(s[end]) == node->children.end()) {
+                    break;
+                }
+                node = node->children[s[end]];
+                if (node->isEndOfWord) {
+                    dp[start] = min(dp[start], dp[end + 1]);
+                }
             }
-            dp[index] = minExtra;
         }
         return dp[0];
     }
