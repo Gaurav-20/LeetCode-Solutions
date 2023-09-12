@@ -1,19 +1,22 @@
 class Solution {
 public:
     int minDeletions(string s) {
-        vector<int> freq(26);
-        for (char c : s) {
-            freq[c - 'a']++;
+        vector<int> freqs(26);
+        for (char ch: s) {
+		    freqs[ch - 'a']++;
         }
-        sort(freq.begin(), freq.end(), greater<int>());
-        int keep = 0, prev = INT_MAX;
-        for (int f : freq) {
-            if (f == 0 || prev == 0) {
-                break;
+	    sort(freqs.begin(), freqs.end());
+    	int res = 0;
+	    for (int i = freqs.size() - 2; i >= 0; i--) {
+		    if (freqs[i] >= freqs[i + 1]) {
+			    if (freqs[i + 1] == 0) {
+				    res += freqs[i];
+                } else {
+				    res += freqs[i] - freqs[i + 1] + 1;
+                }
+			    freqs[i] = max(freqs[i + 1] - 1, 0);
             }
-            prev = min(f, prev - 1);
-            keep += prev;
         }
-        return s.size() - keep;
+        return res;
     }
 };
