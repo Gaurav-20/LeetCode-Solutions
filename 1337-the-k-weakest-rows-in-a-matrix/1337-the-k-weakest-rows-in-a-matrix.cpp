@@ -1,26 +1,15 @@
-bool comp(const pair<int, int>& a, const pair<int, int>& b) {
-    if (a.second < b.second) {
-        return true;
-    } else if (a.second > b.second) {
-        return false;
-    } else {
-        return a.first < b.first;
-    }
-}
-
 class Solution {
 public:
     vector<int> kWeakestRows(vector<vector<int>>& mat, int k) {
-        vector<pair<int, int>> weak;
-
-        for (int i = 0; i < mat.size(); i++) {
-            int s = accumulate(mat[i].begin(), mat[i].end(), 0);
-            weak.push_back({i, s});
+        int m = mat.size(), n = mat[0].size();
+        vector<pair<int, int>> vec(m);
+        for (int i = 0; i < m; i++) {
+            vec[i] = { accumulate(mat[i].begin(), mat[i].end(), 0), i };
         }
-        sort(weak.begin(), weak.end(), comp);
-        vector<int> res;
+        sort(vec.begin(), vec.end());
+        vector<int> res(k);
         for (int i = 0; i < k; i++) {
-            res.push_back(weak[i].first);    
+            res[i] = vec[i].second;
         }
         return res;
     }
