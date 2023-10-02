@@ -1,32 +1,20 @@
 class Solution {
 public:
-    set<vector<int>> st;
-    
-    void solve(vector<int>& candidates, vector<int> curr, int i, int n, int target) {
-        if (target < 0) {
-            return;
-        }
-        if (i == n) {
-            if (target == 0) {
-                st.insert(curr);
-            }
-            return;
-        }
-        curr.push_back(candidates[i]);
-        solve(candidates, curr, i, n, target - candidates[i]);
-        solve(candidates, curr, i + 1, n, target - candidates[i]);
-        curr.pop_back();
-        solve(candidates, curr, i + 1, n, target);
-    }
-    
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
-        int n = candidates.size();
-        st.clear();
-        solve(candidates, {}, 0, n, target);
-        vector<vector<int>> res;
-        for (auto it: st) {
-            res.push_back(it);
+        vector<vector<vector<int>>> dp(target + 1);
+        for (auto &num: candidates) {
+            for (int i = 1; i <= target; i++) {
+                if (i == num) {
+                    dp[i].push_back({ num });
+                } else if (i > num) {
+                    for (auto vec: dp[i - num]) {
+                        vec.push_back(num);
+                        dp[i].push_back(vec);
+                    }
+                }
+            }
         }
-        return res;
+
+        return dp[target];
     }
 };
