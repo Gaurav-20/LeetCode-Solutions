@@ -11,8 +11,8 @@
 
 class Compare {
 public:
-    bool operator()(const ListNode* l1, const ListNode* l2) {
-        return l1->val > l2->val;
+    bool operator()(ListNode* l1, ListNode* l2) {
+        return l1->val >= l2->val;
     }
 };
 
@@ -20,30 +20,26 @@ class Solution {
 public:
     ListNode* mergeKLists(vector<ListNode*>& lists) {
         priority_queue<ListNode*, vector<ListNode*>, Compare> pq;
-        for (ListNode* node : lists) {
-            if (node) {
-                pq.push(node);
+        for (auto list: lists) {
+            if (list) {
+                pq.push(list);
             }
         }
-        if (pq.size() == 0) {
-            return nullptr;
-        }
-        ListNode *temp, *head, *popped;
-        popped = pq.top();
-        pq.pop();
-        head = popped;
-        if (popped->next) {
-            pq.push(popped->next);
-        }
-        temp = head;
+        ListNode* head = nullptr;
+        ListNode* curr;
+        ListNode* prev;
         while (!pq.empty()) {
-            popped = pq.top();
+            curr = pq.top();
             pq.pop();
-            temp->next = popped;
-            temp = temp->next;
-            if (popped->next) {
-                pq.push(popped->next);
+            if (head == nullptr) {
+                head = curr;
+            } else {
+                prev->next = curr;
             }
+            if (curr->next) {
+                pq.push(curr->next);
+            }
+            prev = curr;
         }
         return head;
     }
