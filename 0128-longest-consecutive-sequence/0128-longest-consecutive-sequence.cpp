@@ -8,14 +8,17 @@ public:
         }
         int res = 0;
         for (int i = 0; i < n; i++) {
-            if (st.find(nums[i] - 1) == st.end()) {
-                int curr = nums[i], count = 0;
-                while (st.find(curr) != st.end()) {
-                    count++;
-                    curr++;
-                }
-                res = max(res, count);
+            int num = nums[i];
+            int count = 1;
+		    for (int j = 1; st.count(num - j); j++) {
+                st.erase(num - j);
+                count++;
             }
+		    for (int j = 1; st.count(num + j); j++) { 
+                st.erase(num + j);
+                count++;
+            }
+		    res = max(res, count);
         }
         return res;
     }
