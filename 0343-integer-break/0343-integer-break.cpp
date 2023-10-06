@@ -7,16 +7,14 @@ public:
         if (n == 3) {
             return 2;
         }
-        long long res = 1;
-        while (n > 3) {
-            if (n == 4) {
-                res *= 4;
-            } else {
-                res *= 3;
-            }
-            n -= 3;
+        int countOfThree = n / 3;
+        int remainder = n % 3;
+        if (remainder == 0) {
+            return pow(3, countOfThree);
+        } else if (remainder == 1) {
+            return pow(3, countOfThree - 1) * 4;
+        } else {
+            return pow(3, countOfThree) * 2;
         }
-        res *= n;
-        return res;
     }
 };
