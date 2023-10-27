@@ -1,6 +1,7 @@
 class Solution {
 public:
-    pair<int, int> expandFromBetween(string s, int left, int right, int len) {
+    vector<int> expandFromBetween(string s, int left, int right, int len) {
+        // returns { length of the palindrome found, start index of the palindrome }
         while (left >= 0 && right < len && s[left] == s[right]) {
             left--;
             right++;
@@ -13,15 +14,15 @@ public:
         int maxLen = 1;
         int maxLenStartIndex = 0;
         for (int i = 0; i < len - 1; i++) {
-            auto [oddLen, oddLenStartIndex] = expandFromBetween(s, i, i, len);
-            auto [evenLen, evenLenStartIndex] = expandFromBetween(s, i, i + 1, len);
-            if (maxLen < oddLen) {
-                maxLen = oddLen;
-                maxLenStartIndex = oddLenStartIndex;
+            vector<int> odd = expandFromBetween(s, i, i, len);
+            vector<int> even = expandFromBetween(s, i, i + 1, len);
+            if (maxLen < odd[0]) {
+                maxLen = odd[0];
+                maxLenStartIndex = odd[1];
             }
-            if (maxLen < evenLen) {
-                maxLen = evenLen;
-                maxLenStartIndex = evenLenStartIndex;
+            if (maxLen < even[0]) {
+                maxLen = even[0];
+                maxLenStartIndex = even[1];
             }
         }
         string res = "";
