@@ -1,34 +1,35 @@
 class Solution {
 public:
-    vector<int> expandFromBetween(string s, int left, int right, int len) {
-        // returns { length of the palindrome found, start index of the palindrome }
-        while (left >= 0 && right < len && s[left] == s[right]) {
-            left--;
-            right++;
-        }
-        return { right - left - 1, left + 1 };
+    int expandFromCenter(string& s, int len, int left, int right) {
+        while (left >= 0 && right < len && s[left] == s[right])
+            left--, right++;
+
+        return right - left - 1;
     }
-    
+
     string longestPalindrome(string s) {
         int len = s.size();
-        int maxLen = 1;
-        int maxLenStartIndex = 0;
+        int maxLength = 1;
+        int resIndex = 0;
+        
         for (int i = 0; i < len - 1; i++) {
-            vector<int> odd = expandFromBetween(s, i, i, len);
-            vector<int> even = expandFromBetween(s, i, i + 1, len);
-            if (maxLen < odd[0]) {
-                maxLen = odd[0];
-                maxLenStartIndex = odd[1];
-            }
-            if (maxLen < even[0]) {
-                maxLen = even[0];
-                maxLenStartIndex = even[1];
-            }
+            int len1 = expandFromCenter(s, len, i, i); 
+            // case if longest palindrome is odd length
+            int len2 = expandFromCenter(s, len, i, i + 1); 
+            // case if longest palindrome is even length
+            if (len1 > len2 && len1 > maxLength)
+                resIndex = i, maxLength = len1;
+            if (len2 > len1 && len2 > maxLength)
+                resIndex = i, maxLength = len2;
         }
-        string res = "";
-        for (int i = maxLenStartIndex; i < maxLenStartIndex + maxLen; i++) {
-            res += s[i];
-        }
-        return res;
+
+        string ans = "";
+        if (maxLength & 1)
+            for (int i = resIndex - maxLength / 2; i < resIndex + (maxLength + 1) / 2; i++)
+                ans += s[i];
+        else
+            for (int i = resIndex - (maxLength - 1) / 2; i <= resIndex + (maxLength + 1) / 2; i++)
+                ans += s[i];
+        return ans;
     }
 };
