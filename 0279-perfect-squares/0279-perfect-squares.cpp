@@ -1,33 +1,14 @@
 class Solution {
 public:
-    bool isSquare(int n) {
-        return sqrt(n) == (int) sqrt(n);
-    }
-    // Based on Lagrange's Four Square theorem, there 
-    // are only 4 possible results: 1, 2, 3, 4.
-    int numSquares(int n) {  
-        // If n is a perfect square, return 1.
-        if (isSquare(n)) {
-            return 1;
-        }
-        
-        // The result is 4 if and only if n can be written in the 
-        // form of 4^k * (8*m + 7) as per the
-        // Legendre's three-square theorem
-        while (n % 4 == 0) {
-            n /= 4;
-        }
-        if (n % 8 == 7) {
-            return 4;
-        }
-
-        // Check whether the result is possible with 2 nums
-        int sqrtN = (int) sqrt(n);
-        for (int i = 1; i <= sqrtN; i++) {
-            if (isSquare(n - (i * i))) {
-                return 2;
+    int numSquares(int n) {
+        vector<int> cache(n + 1, INT_MAX);
+        cache[0] = 0;
+        cache[1] = 1;
+        for (int num = 2; num <= n; num++) {
+            for (int i = 1; i * i <= num; i++) {
+                cache[num] = min(cache[num], 1 + cache[num - (i * i)]);
             }
         }
-        return 3;  
-    }  
+        return cache[n];
+    }
 };
