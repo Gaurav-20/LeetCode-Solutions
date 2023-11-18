@@ -1,16 +1,14 @@
 class Solution {
 public:
     vector<int> findLonely(vector<int>& nums) {
-        unordered_map<int, int> mp;
-        for (int num: nums) {
-            mp[num]++;
-        }
         vector<int> res;
-        for (auto it: mp) {
-            int ele = it.first;
-            int freq = it.second;
-            if (freq == 1 && mp.find(ele - 1) == mp.end() && mp.find(ele + 1) == mp.end()) {
-                res.push_back(ele);
+        sort(nums.begin(), nums.end());
+        int n = nums.size();
+        for (int i = 0; i < n; i++) {
+            if (i == 0 || (nums[i] != nums[i - 1] && nums[i] != nums[i - 1] + 1)) {
+                if (i == n - 1 || (nums[i] != nums[i + 1] && nums[i] != nums[i + 1] - 1)) {
+                    res.push_back(nums[i]);
+                }
             }
         }
         return res;
