@@ -1,15 +1,12 @@
 class Solution {
 public:
     int maxCoins(vector<int>& piles) {
-        int n = piles.size();
-        
+        int counter = 0, n = piles.size();
         sort(piles.begin(), piles.end(), greater<int>());
-        int you = 1, bob = n - 1; // alice is always you - 1
-        int res = 0;
-        while (you < bob) {
+        int you = 1, res = 0;
+        while (counter++ < n / 3) {
             res += piles[you];
             you += 2;
-            bob -= 1;
         }
         return res;
     }
