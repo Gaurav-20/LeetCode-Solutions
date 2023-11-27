@@ -20,10 +20,11 @@ public:
         for (int len = 2; len <= n; len++) {
             vector<int> dpCopy = dp;
             for (int button = 0; button < 10; button++) {
-                dp[button] = 0;
+                int curr = 0;
                 for (auto it: moves[button]) {
-                    dp[button] = (dp[button] + dpCopy[it]) % MOD;
+                    curr = (curr + dpCopy[it]) % MOD;
                 }
+                dp[button] = curr;
             }
         }
         int res = 0;
