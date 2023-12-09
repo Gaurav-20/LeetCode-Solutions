@@ -13,19 +13,45 @@
  *     }
  * }
  */
+class StackNode {
+    public TreeNode treeNode;
+    public int state;
+    
+    StackNode(TreeNode treeNode, int state) {
+        this.treeNode = treeNode;
+        this.state = state;
+    }
+    
+    public TreeNode getTreeNode() {
+        return treeNode;
+    }
+    
+    public int getState() {
+        return state;
+    }
+}
+
 class Solution {
     public List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> result = new ArrayList<>();
-        traverse(root, result);
-        return result;
-    }
-    
-    public void traverse(TreeNode root, List<Integer> result) {
-        if (root == null) {
-            return;
+        Stack<StackNode> stack = new Stack<>();
+        stack.push(new StackNode(root, 0));
+        while (!stack.empty()) {
+            TreeNode curr = stack.peek().getTreeNode();
+            int state = stack.peek().getState();
+            stack.pop();
+            if (curr == null || state == 3) {
+                continue;
+            }
+            stack.push(new StackNode(curr, state + 1));
+            if (state == 0) {
+                stack.push(new StackNode(curr.left, 0));
+            } else if (state == 1) {
+                result.add(curr.val);
+            } else {
+                stack.push(new StackNode(curr.right, 0));
+            }
         }
-        traverse(root.left, result);
-        result.add(root.val);
-        traverse(root.right, result);
+        return result;
     }
 }
