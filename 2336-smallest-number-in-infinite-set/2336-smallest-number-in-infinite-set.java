@@ -1,18 +1,15 @@
 class SmallestInfiniteSet {
 
-    public boolean[] present;
+    public boolean[] removed;
 
     public SmallestInfiniteSet() {
-        present = new boolean[1001];
-        for (int i = 1; i <= 1000; i++) {
-            present[i] = true;
-        }
+        removed = new boolean[1001];
     }
     
     public int popSmallest() {
         for (int i = 1; i <= 1000; i++) {
-            if (present[i]) {
-                present[i] = false;
+            if (!removed[i]) {
+                removed[i] = true;
                 return i;
             }
         }
@@ -20,7 +17,7 @@ class SmallestInfiniteSet {
     }
     
     public void addBack(int num) {
-        present[num] = true;
+        removed[num] = false;
     }
 }
 
