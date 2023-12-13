@@ -1,18 +1,16 @@
 class SmallestInfiniteSet {
 
     int currentSmallestElement = 1;
-    Set<Integer> set;
+    TreeSet<Integer> set;
     
     public SmallestInfiniteSet() {
         currentSmallestElement = 1;
-        set = new HashSet<>();
+        set = new TreeSet<>();
     }
     
     public int popSmallest() {
         if (!set.isEmpty()) {
-            int res = Collections.min(set);
-            set.remove(res);
-            return res;
+            return set.pollFirst();
         }
         return currentSmallestElement++;
     }
