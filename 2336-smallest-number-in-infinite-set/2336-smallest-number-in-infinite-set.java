@@ -1,23 +1,26 @@
 class SmallestInfiniteSet {
 
-    public boolean[] removed;
-
+    int currentSmallestElement = 1;
+    Set<Integer> set;
+    
     public SmallestInfiniteSet() {
-        removed = new boolean[1001];
+        currentSmallestElement = 1;
+        set = new HashSet<>();
     }
     
     public int popSmallest() {
-        for (int i = 1; i <= 1000; i++) {
-            if (!removed[i]) {
-                removed[i] = true;
-                return i;
-            }
+        if (!set.isEmpty()) {
+            int res = Collections.min(set);
+            set.remove(res);
+            return res;
         }
-        return -1;
+        return currentSmallestElement++;
     }
     
     public void addBack(int num) {
-        removed[num] = false;
+        if (currentSmallestElement > num) {
+            set.add(num);
+        }
     }
 }
 
