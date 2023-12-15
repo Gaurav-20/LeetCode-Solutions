@@ -8,7 +8,7 @@ class Solution {
     
     public void combinations(List<List<Integer>> result, List<Integer> comb, int k, int start, int n) {
         if (comb.size() == k && n == 0) {
-            result.add(new ArrayList<Integer>(comb));
+            result.add(new ArrayList<>(comb));
             return;
         }
         for (int num = start; num < 10; num++) {
