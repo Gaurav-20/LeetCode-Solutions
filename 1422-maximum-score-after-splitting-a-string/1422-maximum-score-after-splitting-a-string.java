@@ -1,19 +1,19 @@
 class Solution {
     public int maxScore(String s) {
         int n = s.length();
-        int[] zerosCount = new int[n];
+        int onesToRight = 0, zerosToLeft = 0;
         for (int i = 0; i < n; i++) {
-            if (s.charAt(i) == '0') {
-                zerosCount[i] = 1;
-            }
-            if (i > 0) {
-                zerosCount[i] += zerosCount[i - 1];
+            if (s.charAt(i) == '1') {
+                onesToRight += 1;
             }
         }
         int result = 0;
         for (int i = 0; i < n - 1; i++) {
-            int zerosToLeft = zerosCount[i];
-            int onesToRight = n - i - 1 - (zerosCount[n - 1] - zerosCount[i]);
+            if (s.charAt(i) == '0') {
+                zerosToLeft++;
+            } else {
+                onesToRight--;
+            }
             result = Math.max(result, zerosToLeft + onesToRight);
         }
         return result;
