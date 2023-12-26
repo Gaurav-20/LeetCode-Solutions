@@ -1,30 +1,25 @@
 class Solution {
     public int incremovableSubarrayCount(int[] nums) {
-        int n = nums.length, result = 1; // for 1 empty array
+        int n = nums.length, result = 0;
         for (int i = 0; i < n; i++) {
             for (int j = i; j < n; j++) {
-                List<Integer> list = new ArrayList<>();
-                for (int k = 0; k < i; k++) {
-                    list.add(nums[k]);
+                boolean isIncreasing = true;
+                for (int k = 1; k < i; k++) {
+                    if (nums[k] <= nums[k - 1]) {
+                        isIncreasing = false;
+                    }
                 }
-                for (int k = j + 1; k < n; k++) {
-                    list.add(nums[k]);
+                if (j + 1 < n && i - 1 >= 0 && nums[j + 1] <= nums[i - 1]) {
+                    isIncreasing = false;
                 }
-                result += (isIncreasing(list) == true) ? 1 : 0;
+                for (int k = j + 2; k < n; k++) {
+                    if (nums[k] <= nums[k - 1]) {
+                        isIncreasing = false;
+                    }
+                }
+                result += (isIncreasing == true) ? 1 : 0;
             }
         }
         return result;
-    }
-    
-    public boolean isIncreasing(List<Integer> list) {
-        if (list.size() == 0) {
-            return false;
-        }
-        for (int i = 1; i < list.size(); i++) {
-            if (list.get(i) <= list.get(i - 1)) {
-                return false;
-            }
-        }
-        return true;
     }
 }
