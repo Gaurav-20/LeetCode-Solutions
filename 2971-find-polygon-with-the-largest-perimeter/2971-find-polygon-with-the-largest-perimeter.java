@@ -6,10 +6,10 @@ class Solution {
             sum += nums[i];
         }
         for (int i = nums.length - 1; i >= 2; i--) {
-            sum -= nums[i];
-            if (sum > nums[i]) {
-                return sum + nums[i];
+            if (sum > 2 * nums[i]) {
+                return sum;
             }
+            sum -= nums[i];
         }
         return -1;
     }
