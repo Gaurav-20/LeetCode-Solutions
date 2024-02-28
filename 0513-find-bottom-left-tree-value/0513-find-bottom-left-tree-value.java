@@ -15,27 +15,19 @@
  */
 class Solution {
     public int findBottomLeftValue(TreeNode root) {
-        if (root == null) {
-            return 0;
-        }
+        // Doing a Right to Left BFS, so that the last element to be traversed is the result
         Queue<TreeNode> queue = new LinkedList<>();
         queue.add(root);
-        int result = root.val;
+        TreeNode curr = root;
         while (queue.size() > 0) {
-            int size = queue.size();
-            for (int i = 1; i <= size; i++) {
-                TreeNode curr = queue.poll();
-                if (i == 1) {
-                    result = curr.val;
-                }
-                if (curr.left != null) {
-                    queue.add(curr.left);
-                }
-                if (curr.right != null) {
-                    queue.add(curr.right);
-                }
+            curr = queue.poll();
+            if (curr.right != null) {
+                queue.add(curr.right);
+            }
+            if (curr.left != null) {
+                queue.add(curr.left);
             }
         }
-        return result;
+        return curr.val;
     }
 }
