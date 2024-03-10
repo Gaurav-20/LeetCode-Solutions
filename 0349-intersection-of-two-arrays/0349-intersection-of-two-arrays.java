@@ -5,7 +5,7 @@ class Solution {
         for (int i = 0; i < n1; i++) {
             map.putIfAbsent(nums1[i], true);
         }
-        List<Integer> res = new ArrayList<Integer>();
+        List<Integer> res = new ArrayList<>();
         for (int i = 0; i < n2; i++) {
             if (map.containsKey(nums2[i])) {
                 map.remove(nums2[i]);
