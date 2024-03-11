@@ -10,11 +10,6 @@
  */
 class Solution {
     public ListNode sortList(ListNode head) {
-        head = mergeSort(head);
-        return head;
-    }
-    
-    public ListNode mergeSort(ListNode head) {
         if (head == null || head.next == null) {
             return head;
         }
@@ -22,8 +17,8 @@ class Solution {
         ListNode middle = getMiddle(head);
         ListNode nextToMiddle = middle.next;
         middle.next = null;
-        ListNode leftSubList = mergeSort(head);
-        ListNode rightSubList = mergeSort(nextToMiddle);
+        ListNode leftSubList = sortList(head);
+        ListNode rightSubList = sortList(nextToMiddle);
         return sortedMerge(leftSubList, rightSubList);
     }
     
@@ -40,20 +35,23 @@ class Solution {
     }
     
     public ListNode sortedMerge(ListNode left, ListNode right) {
-        if (left == null) {
-            return right;
+        ListNode result = new ListNode(-1);
+        ListNode curr = result;
+        while (left != null && right != null) {
+            if (left.val < right.val) {
+                curr.next = left;
+                left = left.next;
+            } else {
+                curr.next = right;
+                right = right.next;
+            }
+            curr = curr.next;
         }
-        if (right == null) {
-            return left;
-        }
-        ListNode result = null;
-        if (left.val <= right.val) {
-            result = left;
-            result.next = sortedMerge(left.next, right);
+        if (left != null) {
+            curr.next = left;
         } else {
-            result = right;
-            result.next = sortedMerge(left, right.next);
+            curr.next = right;
         }
-        return result;
+        return result.next;
     }
 }
