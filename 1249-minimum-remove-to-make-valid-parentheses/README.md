@@ -11,20 +11,20 @@
 </ul>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre><strong>Input:</strong> s = "lee(t(c)o)de)"
 <strong>Output:</strong> "lee(t(c)o)de"
 <strong>Explanation:</strong> "lee(t(co)de)" , "lee(t(c)ode)" would also be accepted.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre><strong>Input:</strong> s = "a)b(c)d"
 <strong>Output:</strong> "ab(c)d"
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre><strong>Input:</strong> s = "))(("
 <strong>Output:</strong> ""
