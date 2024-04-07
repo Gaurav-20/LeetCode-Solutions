@@ -1,5 +1,9 @@
 # Write your MySQL query statement below
+WITH cte AS (
+    SELECT class, COUNT(*) AS cnt
+    FROM Courses
+    GROUP BY class
+)
 SELECT class
-FROM Courses
-GROUP BY class
-HAVING COUNT(student) >= 5;
+FROM cte
+WHERE cnt >= 5;
