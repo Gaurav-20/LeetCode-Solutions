@@ -15,7 +15,6 @@ class Solution {
                     studentsWhoAte += 1;
                     sandwichPtr += 1;
                     isTakenInThisRound = true;
-                    break;
                 } else {
                     queue.offer(curr);
                 }
