@@ -11,7 +11,7 @@ class Solution {
             list.get(edge[0]).add(edge[1]);
             list.get(edge[1]).add(edge[0]);
         }
-        return Math.max((dfs(list, 0, hasApple) - 1) * 2, 0);
+        return dfs(list, 0, hasApple) * 2;
     }
     
     public int dfs(List<List<Integer>> list, int node, List<Boolean> hasApple) {
@@ -26,6 +26,6 @@ class Solution {
         if (hasApple.get(node) == false && cost == 0) {
             return 0;
         }
-        return cost + 1;
+        return cost + ((node != 0) ? 1 : 0);
     }
 }
