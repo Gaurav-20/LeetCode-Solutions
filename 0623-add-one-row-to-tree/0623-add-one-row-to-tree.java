@@ -16,9 +16,7 @@
 class Solution {
     public TreeNode addOneRow(TreeNode root, int val, int depth) {
         if (depth == 1) {
-            TreeNode newRoot = new TreeNode(val);
-            newRoot.left = root;
-            return newRoot;
+            return new TreeNode(val, root, null);
         }
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
@@ -29,10 +27,8 @@ class Solution {
             while (size-- > 0) {
                 TreeNode curr = queue.poll();
                 if (currDepth == depth - 1) {
-                    TreeNode newLeft = new TreeNode(val);
-                    TreeNode newRight = new TreeNode(val);
-                    newLeft.left = curr.left;
-                    newRight.right = curr.right;
+                    TreeNode newLeft = new TreeNode(val, curr.left, null);
+                    TreeNode newRight = new TreeNode(val, null, curr.right);
                     curr.left = newLeft;
                     curr.right = newRight;
                 }
