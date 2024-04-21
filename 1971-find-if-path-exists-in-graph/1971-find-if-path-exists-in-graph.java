@@ -9,16 +9,21 @@ class Solution {
             adj.get(edge[1]).add(edge[0]);
         }
         boolean[] visited = new boolean[n];
-        dfs(adj, source, visited);
-        return visited[destination];
-    }
-    
-    public void dfs(List<List<Integer>> adj, int src, boolean[] visited) {
-        visited[src] = true;
-        for (Integer neigh : adj.get(src)) {
-            if (!visited[neigh]) {
-                dfs(adj, neigh, visited);
+        Queue<Integer> queue = new LinkedList<>();
+        visited[source] = true;
+        queue.offer(source);
+        while (!queue.isEmpty()) {
+            Integer node = queue.poll();
+            if (node == destination) {
+                return true;
+            }
+            for (Integer neigh : adj.get(node)) {
+                if (!visited[neigh]) {
+                    visited[neigh] = true;
+                    queue.offer(neigh);
+                }
             }
         }
+        return false;
     }
 }
