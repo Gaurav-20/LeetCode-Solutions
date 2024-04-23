@@ -3,18 +3,21 @@ class Solution {
         if (n == 1 || edges.length == 0) {
             return Arrays.asList(0);
         }
-        Map<Integer, List<Integer>> adj = new HashMap<>();
+        List<List<Integer>> adj = new ArrayList<>();
         int[] degree = new int[n];
+        for (int i = 0; i < n; i++) {
+            adj.add(new ArrayList<>());
+        }
         for (int[] edge : edges) {
-            adj.computeIfAbsent(edge[0], k -> new ArrayList<>()).add(edge[1]);
-            adj.computeIfAbsent(edge[1], k -> new ArrayList<>()).add(edge[0]);
+            adj.get(edge[0]).add(edge[1]);
+            adj.get(edge[1]).add(edge[0]);
             degree[edge[0]]++;
             degree[edge[1]]++;
         }
         Queue<Integer> queue = new LinkedList<>();
         for (int i = 0; i < n; i++) {
             if (degree[i] == 1) {
-                queue.add(i);
+                queue.offer(i);
             }
         }
         List<Integer> result = new ArrayList<>();
@@ -27,7 +30,7 @@ class Solution {
                 for (Integer neigh : adj.get(node)) {
                     degree[neigh] -= 1;
                     if (degree[neigh] == 1)
-                        queue.add(neigh);
+                        queue.offer(neigh);
                 }
             }
         }
