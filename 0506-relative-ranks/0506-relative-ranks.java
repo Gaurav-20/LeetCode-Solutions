@@ -1,32 +1,40 @@
+class Pair {
+    public int first;
+    public int second;
+    
+    public Pair(int first, int second) {
+        this.first = first;
+        this.second = second;
+    }
+}
+
 class Solution {
     public String[] findRelativeRanks(int[] score) {
         int n = score.length;
         String[] result = new String[n];
-        if (n == 1) {
-            result[0] = "Gold Medal";
-            return result;
-        }
-        if (n == 2) {
-            if (score[0] > score[1]) {
-                result[0] = "Gold Medal";
-                result[1] = "Silver Medal";
-            } else {
-                result[1] = "Gold Medal";
-                result[0] = "Silver Medal";
+        PriorityQueue<Pair> pq = new PriorityQueue(new Comparator<Pair>() {
+            @Override
+            public int compare(Pair p1, Pair p2) {
+                return p2.first - p1.first;
             }
-            return result;
-        }
-        int[] scoresCopy = score.clone();
-        Arrays.sort(scoresCopy);
-        Map<Integer, String> map = new HashMap<>();
-        map.put(scoresCopy[n - 1], "Gold Medal");
-        map.put(scoresCopy[n - 2], "Silver Medal");
-        map.put(scoresCopy[n - 3], "Bronze Medal");
-        for (int i = n - 4; i >= 0; i--) {
-            map.put(scoresCopy[i], String.valueOf(n - i));
-        }
+        });
         for (int i = 0; i < n; i++) {
-            result[i] = map.get(score[i]);
+            pq.offer(new Pair(score[i], i));
+        }
+        int counter = 1;
+        for (int i = 0; i < n; i++) {
+            int index = pq.peek().second;
+            if (counter == 1) {
+                result[index] = "Gold Medal";
+            } else if (counter == 2) {
+                result[index] = "Silver Medal";
+            } else if (counter == 3) {
+                result[index] = "Bronze Medal";
+            } else {
+                result[index] = String.valueOf(counter);
+            }
+            pq.poll();
+            counter += 1;
         }
         return result;
     }
