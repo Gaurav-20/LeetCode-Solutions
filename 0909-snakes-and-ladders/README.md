@@ -49,7 +49,7 @@ This is the lowest possible number of moves to reach the last square, so return 
 <ul>
 	<li><code>n == board.length == board[i].length</code></li>
 	<li><code>2 &lt;= n &lt;= 20</code></li>
-	<li><code>grid[i][j]</code> is either <code>-1</code> or in the range <code>[1, n<sup>2</sup>]</code>.</li>
+	<li><code>board[i][j]</code> is either <code>-1</code> or in the range <code>[1, n<sup>2</sup>]</code>.</li>
 	<li>The squares labeled <code>1</code> and <code>n<sup>2</sup></code> do not have any ladders or snakes.</li>
 </ul>
 </div>
