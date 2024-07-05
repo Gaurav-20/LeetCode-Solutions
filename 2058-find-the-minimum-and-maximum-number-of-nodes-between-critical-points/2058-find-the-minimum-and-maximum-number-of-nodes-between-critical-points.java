@@ -15,7 +15,7 @@ class Solution {
         if (head == null || head.next == null || head.next.next == null) {
             return result;
         }
-        result[0] = 100000000;
+        result[0] = 1000000;
         ListNode prv = head, cur = head.next, nxt = head.next.next;
         int counter = 0, criticalPoints = 0, firstCritical = -1, lastCritical = -1;
         while (nxt != null) {
@@ -29,7 +29,7 @@ class Solution {
                     result[0] = Math.min(result[0], counter - lastCritical);
                 }
                 lastCritical = counter;
-                result[1] = Math.max(result[1], lastCritical - firstCritical);
+                result[1] = lastCritical - firstCritical;
             }
             prv = cur;
             cur = nxt;
