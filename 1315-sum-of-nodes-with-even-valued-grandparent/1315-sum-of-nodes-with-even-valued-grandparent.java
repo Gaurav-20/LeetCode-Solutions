@@ -14,36 +14,18 @@
  * }
  */
 class Solution {
-    public int result = 0;
-    
+    // hasEGP -> has even valued grandparent
+    // hasEP -> has even valued parent
     public int sumEvenGrandparent(TreeNode root) {
-        solve(root);
-        return result;
+        return solve(root, false, false);
     }
     
-    public void solve(TreeNode root) {
+    public int solve(TreeNode root, boolean hasEGP, boolean hasEP) {
         if (root == null) {
-            return;
+            return 0;
         }
-        if (root.val % 2 == 0) {
-            if (root.left != null) {
-                if (root.left.left != null) {
-                    result += root.left.left.val;
-                }
-                if (root.left.right != null) {
-                    result += root.left.right.val;
-                }
-            }
-            if (root.right != null) {
-                if (root.right.left != null) {
-                    result += root.right.left.val;
-                }
-                if (root.right.right != null) {
-                    result += root.right.right.val;
-                }
-            }
-        }
-        solve(root.left);
-        solve(root.right);
+        return (hasEGP ? root.val : 0)
+            + solve(root.left, hasEP, root.val % 2 == 0)
+            + solve(root.right, hasEP, root.val % 2 == 0);
     }
 }
